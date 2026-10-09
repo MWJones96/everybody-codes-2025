@@ -11,7 +11,7 @@ fn part2(input: &str) -> String {
     let nums: Vec<u32> = input.split(',').map(|x| x.parse().unwrap()).collect();
     let nums: HashSet<u32> = HashSet::from_iter(nums);
     let mut nums: Vec<u32> = nums.into_iter().collect();
-    nums.sort();
+    nums.sort_unstable();
 
     nums[..20].iter().sum::<u32>().to_string()
 }
@@ -19,20 +19,12 @@ fn part2(input: &str) -> String {
 fn part3(input: &str) -> String {
     let nums: Vec<u32> = input.split(',').map(|x| x.parse().unwrap()).collect();
 
-    let mut max = 0;
-
     let mut freq: HashMap<u32, u32> = HashMap::new();
     for num in nums {
-        if !freq.contains_key(&num) {
-            freq.insert(num, 0);
-        }
-
-        let new_val = freq.get(&num).unwrap() + 1;
-        freq.insert(num, new_val);
-        max = max.max(new_val);
+        *freq.entry(num).or_insert(0) += 1;
     }
 
-    max.to_string()
+    freq.values().max().unwrap_or(&0).to_string()
 }
 
 fn main() {
