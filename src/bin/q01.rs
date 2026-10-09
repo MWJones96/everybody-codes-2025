@@ -65,7 +65,7 @@ fn part3(input: &str) -> String {
             'L' => {
                 let steps: usize = mv[1..].parse().unwrap();
                 let steps: usize = steps % names.len();
-                let steps = names.len() - steps;
+                let steps: usize = names.len() - steps;
                 let j: usize = steps % names.len();
                 names.swap(0, j);
             }
